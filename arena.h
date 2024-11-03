@@ -26,34 +26,10 @@
  * 'arena_deinit' -> Frees the arena->data memory and the arena itself since 'arena_init' allocates it on the heap.
  */
 
-/*
-    EXAMPLE_USAGE:
-    int main(int argc, const char** argv){
-        arena_t *my_arena = arena_init(sizeof(int) * 3);
-        int* i1 = (int*) arena_alloc(my_arena, sizeof(int));
-        int* i2 = (int*) arena_alloc(my_arena, sizeof(int));
-        int* i3 = (int*) arena_alloc(my_arena, sizeof(int));
-        int* i4 = (int*) arena_alloc(my_arena, sizeof(int)); // OUT OF BOUNDS -> RETURNS NULL
-        
-        // Do something with the allocated variables
-        *i1 = 1;
-        *i2 = 2;
-        *i3 = 3;
-        int total = *i1 + *i2 + *i3;
-        printf("%d\n", total); // 6
-
-        arena_deinit(my_arena);
-        // i1, i2, i3 are deallocated with the arena, effectively ensuring that their lifetime
-        // is tied to the one of the arena.
-        return 0;
-    }
-*/
-
 #include <stdlib.h>
 #include <stdint.h>
 
 /*
- * Declaration of the arena struct
  * @param data memory reserved for the arena
  * @param size bytes currently used in the arena (sum of the allocations)
  * @param capacity maximum number of bytes the user can allocate inside the arena

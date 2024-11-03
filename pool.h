@@ -1,9 +1,40 @@
 #ifndef POOL_H
 #define POOL_H
 
+/**
+ * @author Andrea Colombo
+ * Simple STB-style implementation of a memory pool allocator.
+ * The way it works is extremely straight forward, you request a certain amount of 
+ * memory during initialization that gets split into chunks of the desired size.
+ * After that you're able to request chunks from the pool or give them back when you
+ * don't need them anymore.
+ * Here's a quick explanation of the functions you'll have to use in order to interact
+ * with this library.
+ *
+ * 'pool_init' -> takes two parameters, chunk_size and n_chunks, it allocates a new memory
+ * pool on the heap containing the "raw" memory you'll then be able to use for the initalization.
+ * It returns the pointer to the newly allocated pool or NULL if any of the allocations fail.
+ *
+ * 'pool_alloc' -> finds the first free chunk of memory inside the pool and returns a void pointer
+ * that points to that chunk
+ *
+ * 'pool_free' -> gives back a pointer to the memory pool, making it a candidate for future allocations
+ *
+ * 'pool_deinit' -> frees all the memory related to the pool (the pool itself was heap allocated so it 
+ * frees it too)
+ */
+
 #include <stdlib.h>
 #include <stdint.h>
 
+/**
+ * @param chunk_size number of bytes occupied by each chunk
+ * @param n_chunks number of chunks alloacted at initialization
+ * @param data pointer to the "raw" memory allocated for the pool
+ * @oaram ledger bitmap to check for free chunks
+ * @note The user isn't supposed access any of the struct members manually, stick to 
+ * using the provided functions.
+ */
 typedef struct {
     size_t chunk_size;
     size_t n_chunks;
