@@ -18,7 +18,7 @@
  * 'pool_alloc' -> finds the first free chunk of memory inside the pool and returns a void pointer
  * that points to that chunk
  *
- * 'pool_free' -> gives back a pointer to the memory pool, making it a candidate for future allocations
+ * 'pool_free' -> gives back a pointer (chunk) to the memory pool, making it a candidate for future allocations
  *
  * 'pool_deinit' -> frees all the memory related to the pool (the pool itself was heap allocated so it 
  * frees it too)
