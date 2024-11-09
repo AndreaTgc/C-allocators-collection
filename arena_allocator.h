@@ -52,33 +52,33 @@ typedef struct {
  * Heap allocates a new arena and returns the pointer to it
  * @param capacity bytes reserved for the arena allocations
  */
-MemArena *arena_init(size_t capacity);
+MemArena *mem_arena_init(size_t capacity);
 
 /**
  * Public interface for allocating bytes in the arena.
  * @param arena pointer to the arena we want to use for the allocation
  * @param bytes number of bytes we want to allocate inside the arena
  */
-void *arena_alloc(MemArena *arena, size_t bytes);
+void *mem_arena_alloc(MemArena *arena, size_t bytes);
 
 /**
  * Resets the arena state, basically setting it to a new arena allocated
  * with 'arena_init'
  * @param arena pointer to the arena we want to reset
  */
-void arena_reset(MemArena *arena);
+void mem_arena_reset(MemArena *arena);
 
 /**
  * Frees the arena previously allocated with 'arena_init'
  * @param arena pointer to the arena we want to free from the heap.
  */
-void arena_deinit(MemArena *arena);
+void mem_arena_deinit(MemArena *arena);
 
 #endif // ARENA_H
 
 #ifdef ARENA_IMPL
 
-MemArena *arena_init(size_t capacity) {
+MemArena *mem_arena_init(size_t capacity) {
   MemArena *new_arena = malloc(sizeof(MemStack));
   if (new_arena == NULL) {
     return NULL;
@@ -93,7 +93,7 @@ MemArena *arena_init(size_t capacity) {
   return new_arena;
 }
 
-void *arena_alloc(MemArena *arena, size_t bytes) {
+void *mem_arena_alloc(MemArena *arena, size_t bytes) {
   if (arena == NULL) {
     // Something went really wrong here
     return NULL;
@@ -106,13 +106,13 @@ void *arena_alloc(MemArena *arena, size_t bytes) {
   return ptr;
 }
 
-void arena_reset(MemArena *arena) {
+void mem_arena_reset(MemArena *arena) {
   if (arena != NULL) {
     arena->size = 0;
   }
 }
 
-void arena_deinit(MemArena *arena) {
+void mem_arena_deinit(MemArena *arena) {
   if (arena != NULL) {
     free(arena->data);
     free(arena);

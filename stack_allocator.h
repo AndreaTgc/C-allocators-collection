@@ -1,6 +1,26 @@
 #ifndef STACK_ALLOC_H
 #define STACK_ALLOC_H
 
+/**
+ * STB-Style implementation of a stack allocator, it is extremely similar to the
+ * arena allocator implementation in 'arena_allocator.h" but with the ability to
+ * pop bytes from the top of the stack.
+ *
+ * 'mem_stack_init' -> Allocates a new stack allocator on the heap and returns
+ * the pointer to it. Please note that this implementation considers the number
+ * of bytes as a hard cap and it won't allow you to exceed that limit.
+ *
+ * 'mem_stack_alloc' -> Reserves a certain amount of bytes (function parameters)
+ * and returns the pointer to that chunk of memory to the user
+ *
+ * 'mem_stack_free' -> This function is effectively the pop operation for the
+ * stack and it's used to free n bytes from the top, making them available for
+ * future allocations
+ *
+ * 'mem_stack_deinit' -> Frees all the memory associated with the stack (the
+ * stack itself was heap allocated by 'mem_stack_init' so it gets freed too)
+ */
+
 #include <stdint.h>
 #include <stdlib.h>
 
